@@ -1,27 +1,19 @@
+# load the dataset
 library(readxl)
-ts_data <- read_excel("F:\\Users\\DHRUVI SHAH\\OneDrive\\Documents\\Research RBI\\appended_file2.xlsx", sheet = "Rural1")
-View(ts_data)
+data <- read_excel("F:\\Users\\DHRUVI SHAH\\OneDrive\\Documents\\Research RBI\\Forecasted_Data.xlsx", sheet = "Rural1")
 acf(ts_data$Nondurable)
 pacf(ts_data$Nondurable)
+
 library(tseries)
 adf.test(ts_data$Nondurable)
-install.packages("forecast")
-library(forecast)
-auto.arima(ts_data$Nondurable)
-ts_data1 <- ts(ts_data$Nondurable, start = c(2020, 2), frequency = 12)
-plot(ts_data1)
-arima_model <- arima(ts_data1, order = c(2,1,1))
-forecast_data <- forecast(arima_model, h = 5)
-print(forecast_data)
-plot(forecast_data)
-
-
-# load the dataset
-data <- read_excel("F:\\Users\\DHRUVI SHAH\\OneDrive\\Documents\\Research RBI\\Forecasted_Data.xlsx", sheet = "Rural1")
 
 # convert the Month column to a Date object
 data$month_survey<- as.Date(data$month_survey)
-auto.arima(data$Durable)
+
+install.packages("forecast")
+library(forecast)
+auto.arima(data$Nondurable)
+
 # fit an ARIMA model to the data
 model <- arima(data$Nondurable, order=c(2,1,1))
 
